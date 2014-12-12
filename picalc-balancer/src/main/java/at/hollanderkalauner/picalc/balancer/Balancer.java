@@ -59,7 +59,7 @@ public class Balancer extends UnicastRemoteObject implements Calculator {
                 LOG.error("An Error occured balancing a request", e);
                 throw e;
             }
-            if (this.calculatorRegistryService.getCalculatorList().size() >= this.lastCalculator) {
+            if (this.lastCalculator >= this.calculatorRegistryService.getCalculatorList().size()) {
                 this.lastCalculator = 0;
             }
 
