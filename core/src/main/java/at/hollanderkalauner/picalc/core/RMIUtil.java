@@ -37,6 +37,7 @@ public class RMIUtil {
         LocateRegistry.createRegistry(1099);
         addCodeBaseFor(Calculator.class);
         addCodeBaseFor(CalculationBehaviour.class);
+        addCodeBaseFor(CalculatorRegistry.class);
     }
 
     /**
