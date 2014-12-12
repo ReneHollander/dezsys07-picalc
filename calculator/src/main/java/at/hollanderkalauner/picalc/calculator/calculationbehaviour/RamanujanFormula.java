@@ -7,6 +7,8 @@ import java.math.BigInteger;
 
 /**
  * Created by rene on 12/12/14.
+ * <p/>
+ * Quelle: http://cronodon.com/Programming/Pi.html
  */
 public class RamanujanFormula implements CalculationBehaviour {
 

@@ -22,6 +22,6 @@ public class Client {
     }
 
     public BigDecimal calc() throws Exception {
-        return service.pi(123);
+        return service.pi(100000);
     }
 }

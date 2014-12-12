@@ -2,7 +2,6 @@ package at.hollanderkalauner.picalc.core;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 
 /**
  * Created by Paul on 12.12.2014.
