@@ -3,6 +3,7 @@ package at.hollanderkalauner.picalc.core;
 import java.io.Serializable;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 /**
  * Created by rene on 12/12/14.

@@ -21,6 +21,7 @@ public class Main {
         RMIUtil.setupPolicy();
 
         startBehindBalancer();
+        //startIndependent();
     }
 
     private static void startBehindBalancer() throws RemoteException, NotBoundException, MalformedURLException {

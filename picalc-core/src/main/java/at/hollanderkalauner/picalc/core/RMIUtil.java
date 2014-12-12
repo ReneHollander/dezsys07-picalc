@@ -35,9 +35,6 @@ public class RMIUtil {
     public static void setupRegistry() throws RemoteException {
         LOG.info("Setting up Registry");
         LocateRegistry.createRegistry(1099);
-        addCodeBaseFor(Calculator.class);
-        addCodeBaseFor(CalculationBehaviour.class);
-        addCodeBaseFor(CalculatorRegistry.class);
     }
 
     /**
