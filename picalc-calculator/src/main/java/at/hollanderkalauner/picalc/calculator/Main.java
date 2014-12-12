@@ -1,6 +1,6 @@
 package at.hollanderkalauner.picalc.calculator;
 
-import at.hollanderkalauner.picalc.calculator.calculationbehaviour.GaussLegendre;
+import at.hollanderkalauner.picalc.core.calculationbehaviour.GaussLegendre;
 import at.hollanderkalauner.picalc.core.Calculator;
 import at.hollanderkalauner.picalc.core.CalculatorRegistry;
 import at.hollanderkalauner.picalc.core.RMIUtil;

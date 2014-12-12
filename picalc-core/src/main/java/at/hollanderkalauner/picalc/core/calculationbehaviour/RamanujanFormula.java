@@ -1,4 +1,4 @@
-package at.hollanderkalauner.picalc.calculator.calculationbehaviour;
+package at.hollanderkalauner.picalc.core.calculationbehaviour;
 
 import at.hollanderkalauner.picalc.core.CalculationBehaviour;
 
