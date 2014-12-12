@@ -6,8 +6,10 @@ package at.hollanderkalauner.picalc.client;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+        System.out.println(1);
         Client c = new Client();
-        c.calc();
+        System.out.println(c.calc().toString());
+        System.out.println(2);
     }
 
 }
