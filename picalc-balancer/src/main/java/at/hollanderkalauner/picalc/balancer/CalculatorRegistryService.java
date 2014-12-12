@@ -6,6 +6,7 @@ import at.hollanderkalauner.picalc.core.CalculatorRegistry;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ public class CalculatorRegistryService extends UnicastRemoteObject implements Ca
 
     public CalculatorRegistryService() throws RemoteException {
         super();
-        this.calculatorList = new ArrayList<Calculator>();
+        this.calculatorList = Collections.synchronizedList(new ArrayList<Calculator>());
     }
 
     public List<Calculator> getCalculatorList() {
@@ -27,5 +28,10 @@ public class CalculatorRegistryService extends UnicastRemoteObject implements Ca
     @Override
     public void registerCalculator(Calculator calculator) throws RemoteException {
         this.calculatorList.add(calculator);
+    }
+
+    @Override
+    public void unregisterCalculator(Calculator c) throws RemoteException {
+        this.calculatorList.remove(c);
     }
 }

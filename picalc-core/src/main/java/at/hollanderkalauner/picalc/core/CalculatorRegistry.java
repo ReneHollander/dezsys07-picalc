@@ -12,4 +12,6 @@ public interface CalculatorRegistry extends Remote, Serializable {
 
     public void registerCalculator(Calculator c) throws RemoteException;
 
+    public void unregisterCalculator(Calculator c) throws RemoteException;
+
 }

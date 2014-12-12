@@ -1,5 +1,6 @@
 package at.hollanderkalauner.picalc.balancer;
 
+import at.hollanderkalauner.picalc.core.CalculationBehaviour;
 import at.hollanderkalauner.picalc.core.Calculator;
 import at.hollanderkalauner.picalc.core.RMIUtil;
 import at.hollanderkalauner.picalc.core.Static;
@@ -27,13 +28,17 @@ public class Balancer extends UnicastRemoteObject implements Calculator {
         this.lastCalculator = 0;
     }
 
-    public void bind() throws RemoteException, AlreadyBoundException, MalformedURLException {
+    public void bind(CalculationBehaviour initialCalculationBehaviour) throws RemoteException, AlreadyBoundException, MalformedURLException {
         RMIUtil.setupPolicy();
         RMIUtil.setupRegistry();
+
+        this.setCalculationBehaviour(initialCalculationBehaviour);
         Naming.bind(Static.BALANCER_CALCULATORREGISTRY_NAME, this.calculatorRegistryService);
         Naming.bind(Static.CALCULATOR_SERVICE_NAME, this);
+    }
 
-        Naming.bind(Static.CALCULATOR_CALCULATIONBEHAVIOUR_NAME, new GaussLegendre());
+    public void setCalculationBehaviour(CalculationBehaviour calculationBehaviour) throws MalformedURLException, RemoteException {
+        Naming.rebind(Static.CALCULATOR_CALCULATIONBEHAVIOUR_NAME, new GaussLegendre());
     }
 
     @Override
