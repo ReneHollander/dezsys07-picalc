@@ -7,6 +7,7 @@ import at.hollanderkalauner.picalc.core.Static;
 import at.hollanderkalauner.picalc.core.calculationbehaviour.GaussLegendre;
 
 import java.math.BigDecimal;
+import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
@@ -43,12 +44,31 @@ public class Balancer extends UnicastRemoteObject implements Calculator {
 
     @Override
     public BigDecimal pi(int decimalPlaces) throws RemoteException {
-        if (this.calculatorRegistryService.getCalculatorList().size() == 0) {
-            throw new RemoteException("No calculators servers available!");
+        BigDecimal result = null;
+        while (true) {
+
+            if (this.calculatorRegistryService.getCalculatorList().size() == 0) {
+                throw new RemoteException("No calculators servers available!");
+            }
+            if (this.calculatorRegistryService.getCalculatorList().size() == this.lastCalculator) {
+                this.lastCalculator = 0;
+            }
+
+            Calculator calc = this.calculatorRegistryService.getCalculatorList().get(this.lastCalculator);
+            this.lastCalculator++;
+
+            try {
+                result = calc.pi(decimalPlaces);
+                break;
+            } catch (RemoteException re) {
+                if (re.getCause() instanceof ConnectException) {
+                    this.calculatorRegistryService.unregisterCalculator(calc);
+                    continue;
+                } else {
+                    throw re;
+                }
+            }
         }
-        if (this.calculatorRegistryService.getCalculatorList().size() == this.lastCalculator) {
-            this.lastCalculator = 0;
-        }
-        return this.calculatorRegistryService.getCalculatorList().get(this.lastCalculator++).pi(decimalPlaces);
+        return result;
     }
 }
