@@ -1,6 +1,6 @@
 package at.hollanderkalauner.picalc.calculator;
 
-import at.hollanderkalauner.picalc.calculator.calculationbehaviour.GaussLegendre;
+import at.hollanderkalauner.picalc.calculator.calculationbehaviour.RamanujanFormula;
 import at.hollanderkalauner.picalc.core.RMIUtil;
 import at.hollanderkalauner.picalc.core.Static;
 
@@ -16,7 +16,8 @@ public class Main {
         RMIUtil.setupRegistry();
 
         Naming.bind(Static.CALCULATOR_SERVICE_NAME, new CalculatorService());
-        Naming.bind(Static.CALCULATOR_CALCULATIONBEHAVIOUR_NAME, new GaussLegendre());
+        //Naming.bind(Static.CALCULATOR_CALCULATIONBEHAVIOUR_NAME, new GaussLegendre());
+        Naming.bind(Static.CALCULATOR_CALCULATIONBEHAVIOUR_NAME, new RamanujanFormula());
 
         System.out.println("Service " + Static.CALCULATOR_SERVICE_NAME + " bound!");
     }
