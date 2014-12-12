@@ -17,7 +17,6 @@ public class CalculatorService extends UnicastRemoteObject implements Calculator
 
     @Override
     public BigDecimal pi(int decimalPlaces) throws RemoteException {
-        System.out.println(1);
         return BigDecimal.valueOf(Math.PI);
     }
 
