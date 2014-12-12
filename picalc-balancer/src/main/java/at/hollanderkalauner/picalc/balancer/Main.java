@@ -1,6 +1,7 @@
 package at.hollanderkalauner.picalc.balancer;
 
 import at.hollanderkalauner.picalc.core.Static;
+import at.hollanderkalauner.picalc.core.calculationbehaviour.GaussLegendre;
 
 import java.net.MalformedURLException;
 import java.rmi.AlreadyBoundException;
@@ -13,7 +14,7 @@ public class Main {
 
     public static void main(String[] args) throws MalformedURLException, RemoteException, AlreadyBoundException {
         Balancer b = new Balancer();
-        b.bind();
+        b.bind(new GaussLegendre());
     }
 
 }
