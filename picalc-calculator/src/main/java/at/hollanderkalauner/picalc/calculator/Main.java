@@ -18,28 +18,9 @@ import java.rmi.RemoteException;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        RMIUtil.setupPolicy();
-
-        startBehindBalancer();
-        //startIndependent();
+        Calculator calculator = new CalculatorService(CalculatorService.Mode.BEHINDBALANCER);
     }
 
-    private static void startBehindBalancer() throws RemoteException, NotBoundException, MalformedURLException {
-        Calculator calculator = new CalculatorService();
 
-        CalculatorRegistry calculatorRegistry = (CalculatorRegistry) Naming.lookup(Static.BALANCER_CALCULATORREGISTRY_NAME);
-        calculatorRegistry.registerCalculator(calculator);
-    }
-
-    private static void startIndependent() throws RemoteException, AlreadyBoundException, MalformedURLException {
-        RMIUtil.setupRegistry();
-
-        //Naming.bind(Static.CALCULATOR_CALCULATIONBEHAVIOUR_NAME, new RamanujanFormula());
-        Naming.bind(Static.CALCULATOR_CALCULATIONBEHAVIOUR_NAME, new GaussLegendre());
-
-        Naming.bind(Static.CALCULATOR_SERVICE_NAME, new CalculatorService());
-
-        System.out.println("Service " + Static.CALCULATOR_SERVICE_NAME + " bound!");
-    }
 
 }
