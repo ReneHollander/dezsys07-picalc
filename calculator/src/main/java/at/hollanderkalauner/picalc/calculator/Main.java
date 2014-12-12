@@ -1,5 +1,6 @@
 package at.hollanderkalauner.picalc.calculator;
 
+import at.hollanderkalauner.picalc.calculator.calculationbehaviour.GaussLegendre;
 import at.hollanderkalauner.picalc.core.RMIUtil;
 import at.hollanderkalauner.picalc.core.Static;
 
@@ -13,8 +14,10 @@ public class Main {
     public static void main(String[] args) throws Exception {
         RMIUtil.setupPolicy();
         RMIUtil.setupRegistry();
-        CalculatorService calculatorService = new CalculatorService();
-        Naming.bind(Static.CALCULATOR_SERVICE_NAME, calculatorService);
+
+        Naming.bind(Static.CALCULATOR_SERVICE_NAME, new CalculatorService());
+        Naming.bind(Static.CALCULATOR_CALCULATIONBEHAVIOUR_NAME, new GaussLegendre());
+
         System.out.println("Service " + Static.CALCULATOR_SERVICE_NAME + " bound!");
     }
 

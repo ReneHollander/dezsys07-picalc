@@ -1,8 +1,13 @@
 package at.hollanderkalauner.picalc.calculator;
 
+import at.hollanderkalauner.picalc.core.CalculationBehaviour;
 import at.hollanderkalauner.picalc.core.Calculator;
+import at.hollanderkalauner.picalc.core.Static;
 
 import java.math.BigDecimal;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -17,7 +22,15 @@ public class CalculatorService extends UnicastRemoteObject implements Calculator
 
     @Override
     public BigDecimal pi(int decimalPlaces) throws RemoteException {
-        return BigDecimal.valueOf(Math.PI);
+        try {
+            CalculationBehaviour calculationBehaviour = (CalculationBehaviour) Naming.lookup(Static.CALCULATOR_CALCULATIONBEHAVIOUR_NAME);
+            return calculationBehaviour.calculatePi(decimalPlaces);
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

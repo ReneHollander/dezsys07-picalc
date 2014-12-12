@@ -18,6 +18,7 @@ public class RMIUtil {
     public static void setupRegistry() throws RemoteException {
         LocateRegistry.createRegistry(1099);
         addCodeBaseFor(Calculator.class);
+        addCodeBaseFor(CalculationBehaviour.class);
     }
 
     private static void addCodeBaseFor(Class<?> clazz) {
