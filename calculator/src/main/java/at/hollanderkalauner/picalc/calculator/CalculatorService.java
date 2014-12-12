@@ -11,8 +11,8 @@ import java.rmi.server.UnicastRemoteObject;
  */
 public class CalculatorService extends UnicastRemoteObject implements Calculator {
 
-    public CalculatorService(int calculatorServerPort) throws RemoteException {
-        super(calculatorServerPort);
+    public CalculatorService() throws RemoteException {
+        super();
     }
 
     @Override

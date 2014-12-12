@@ -1,5 +1,6 @@
 package at.hollanderkalauner.picalc.calculator;
 
+import at.hollanderkalauner.picalc.core.RMIUtil;
 import at.hollanderkalauner.picalc.core.Static;
 
 import java.net.MalformedURLException;
@@ -12,14 +13,11 @@ import java.rmi.RemoteException;
  */
 public class Main {
 
-    public static void main(String[] args) throws RemoteException, AlreadyBoundException, MalformedURLException {
-        if (System.getSecurityManager() == null) {
-            System.setSecurityManager(new SecurityManager());
-        }
-
-        CalculatorService calculatorServer = new CalculatorService(Static.CALCULATOR_SERVER_PORT);
-        Naming.bind(Static.CALCULATOR_SERVER_NAME, calculatorServer);
-        System.out.println("Service " + Static.CALCULATOR_SERVER_NAME + " bound!");
+    public static void main(String[] args) throws Exception {
+        RMIUtil.setupPolicy();
+        CalculatorService calculatorServer = new CalculatorService();
+        Naming.bind(Static.CALCULATOR_SERVICE_NAME, calculatorServer);
+        System.out.println("Service " + Static.CALCULATOR_SERVICE_NAME + " bound!");
     }
 
 }
