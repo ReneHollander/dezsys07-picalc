@@ -42,6 +42,6 @@ public class Client {
      * @throws RemoteException if something is wrong
      */
     public BigDecimal calc() throws RemoteException {
-        return service.pi(100);
+        return service.pi(40000);
     }
 }

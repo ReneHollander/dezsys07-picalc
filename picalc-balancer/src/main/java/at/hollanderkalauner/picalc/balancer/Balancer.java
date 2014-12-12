@@ -51,7 +51,7 @@ public class Balancer extends UnicastRemoteObject implements Calculator {
 
     @Override
     public BigDecimal pi(int decimalPlaces) throws RemoteException {
-        BigDecimal result = null;
+        BigDecimal result;
         while (true) {
 
             if (this.calculatorRegistryService.getCalculatorList().size() == 0) {
@@ -59,7 +59,7 @@ public class Balancer extends UnicastRemoteObject implements Calculator {
                 LOG.error("An Error occured balancing a request", e);
                 throw e;
             }
-            if (this.calculatorRegistryService.getCalculatorList().size() == this.lastCalculator) {
+            if (this.calculatorRegistryService.getCalculatorList().size() >= this.lastCalculator) {
                 this.lastCalculator = 0;
             }
 
@@ -74,7 +74,6 @@ public class Balancer extends UnicastRemoteObject implements Calculator {
                 if (re.getCause() instanceof ConnectException) {
                     LOG.warn("Removing Calculator " + calc + " from service list due to a lost connection!");
                     this.calculatorRegistryService.unregisterCalculator(calc);
-                    continue;
                 } else {
                     LOG.error("An Error occured balancing a request", re);
                     throw re;
