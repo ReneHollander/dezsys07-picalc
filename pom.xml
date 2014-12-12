@@ -9,10 +9,10 @@
     <packaging>pom</packaging>
     <version>1.0.0</version>
     <modules>
-        <module>core</module>
-        <module>balancer</module>
-        <module>calculator</module>
-        <module>client</module>
+        <module>picalc-core</module>
+        <module>picalc-balancer</module>
+        <module>picalc-calculator</module>
+        <module>picalc-client</module>
     </modules>
 
     <dependencies>

@@ -1,5 +1,7 @@
 package at.hollanderkalauner.picalc.balancer;
 
+import at.hollanderkalauner.picalc.core.Static;
+
 import java.net.MalformedURLException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
