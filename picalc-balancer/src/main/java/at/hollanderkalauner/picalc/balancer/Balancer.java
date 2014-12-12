@@ -29,6 +29,7 @@ public class Balancer implements Calculator {
         RMIUtil.setupPolicy();
         RMIUtil.setupRegistry();
         Naming.bind(Static.BALANCER_CALCULATORREGISTRY_NAME, this.calculatorRegistryService);
+        Naming.bind(Static.CALCULATOR_SERVICE_NAME, this);
     }
 
     @Override
