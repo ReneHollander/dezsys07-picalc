@@ -35,7 +35,7 @@ public class CalculatorService extends UnicastRemoteObject implements Calculator
     @Override
     public BigDecimal pi(int decimalPlaces) throws RemoteException {
         try {
-            LOG.info("Calculating Pi");
+            LOG.info("Calculating Pi to " + decimalPlaces + " decimal places");
             CalculationBehaviour calculationBehaviour = (CalculationBehaviour) Naming.lookup(Static.CALCULATOR_CALCULATIONBEHAVIOUR_NAME);
             return calculationBehaviour.calculatePi(decimalPlaces);
         } catch (NotBoundException e) {

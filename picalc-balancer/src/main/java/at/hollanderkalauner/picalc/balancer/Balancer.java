@@ -5,6 +5,8 @@ import at.hollanderkalauner.picalc.core.Calculator;
 import at.hollanderkalauner.picalc.core.RMIUtil;
 import at.hollanderkalauner.picalc.core.Static;
 import at.hollanderkalauner.picalc.core.calculationbehaviour.GaussLegendre;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.net.ConnectException;
@@ -19,6 +21,8 @@ import java.rmi.server.UnicastRemoteObject;
  */
 public class Balancer extends UnicastRemoteObject implements Calculator {
 
+    private static final Logger LOG = LogManager.getLogger(Balancer.class);
+
     private CalculatorRegistryService calculatorRegistryService;
     private int lastCalculator;
 
@@ -30,15 +34,18 @@ public class Balancer extends UnicastRemoteObject implements Calculator {
     }
 
     public void bind(CalculationBehaviour initialCalculationBehaviour) throws RemoteException, AlreadyBoundException, MalformedURLException {
+        LOG.info("Binding Balancer");
         RMIUtil.setupPolicy();
         RMIUtil.setupRegistry();
 
         this.setCalculationBehaviour(initialCalculationBehaviour);
         Naming.bind(Static.BALANCER_CALCULATORREGISTRY_NAME, this.calculatorRegistryService);
         Naming.bind(Static.CALCULATOR_SERVICE_NAME, this);
+        LOG.info("Successfully bound Balancer");
     }
 
     public void setCalculationBehaviour(CalculationBehaviour calculationBehaviour) throws MalformedURLException, RemoteException {
+        LOG.info("Setting Calculation Behaviour to " + calculationBehaviour);
         Naming.rebind(Static.CALCULATOR_CALCULATIONBEHAVIOUR_NAME, new GaussLegendre());
     }
 
@@ -48,7 +55,9 @@ public class Balancer extends UnicastRemoteObject implements Calculator {
         while (true) {
 
             if (this.calculatorRegistryService.getCalculatorList().size() == 0) {
-                throw new RemoteException("No calculators servers available!");
+                RemoteException e = new RemoteException("No calculators servers available!");
+                LOG.error("An Error occured balancing a request", e);
+                throw e;
             }
             if (this.calculatorRegistryService.getCalculatorList().size() == this.lastCalculator) {
                 this.lastCalculator = 0;
@@ -58,13 +67,16 @@ public class Balancer extends UnicastRemoteObject implements Calculator {
             this.lastCalculator++;
 
             try {
+                LOG.info("Routing request with " + decimalPlaces + " decimal places to service " + calc);
                 result = calc.pi(decimalPlaces);
                 break;
             } catch (RemoteException re) {
                 if (re.getCause() instanceof ConnectException) {
+                    LOG.warn("Removing Calculator " + calc + " from service list due to a lost connection!");
                     this.calculatorRegistryService.unregisterCalculator(calc);
                     continue;
                 } else {
+                    LOG.error("An Error occured balancing a request", re);
                     throw re;
                 }
             }

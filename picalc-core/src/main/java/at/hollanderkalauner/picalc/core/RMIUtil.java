@@ -37,13 +37,4 @@ public class RMIUtil {
         LocateRegistry.createRegistry(1099);
     }
 
-    /**
-     * Adds codebase for the specified class
-     *
-     * @param clazz class that will be added to codebase
-     */
-    private static void addCodeBaseFor(Class<?> clazz) {
-        LOG.info("Adding Codebase for " + clazz.toString());
-        System.setProperty("java.rmi.server.codebase", clazz.getProtectionDomain().getCodeSource().getLocation().toString());
-    }
 }
