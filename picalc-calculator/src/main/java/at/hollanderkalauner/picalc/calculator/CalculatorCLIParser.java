@@ -32,6 +32,8 @@ public class CalculatorCLIParser {
      */
     public CalculatorCLIParser(CalculatorService calculator) {
         this.calculator = calculator;
+        this.host = null;
+        this.port = -1;
     }
 
     /**
@@ -54,21 +56,23 @@ public class CalculatorCLIParser {
     @SuppressWarnings("AccessStaticViaInstance")
     private boolean checkArgs(String[] args) {
         Options options = new Options();
-        options.addOption(OptionBuilder.withDescription("Shows a help dialog").withLongOpt("help").create('h'));
+        options.addOption(OptionBuilder.withDescription("Shows a help dialog").create("help"));
+        options.addOption(OptionBuilder.hasArg().withArgName("hostname").withLongOpt("host").withDescription("Hostname of the balancer").create('h'));
+        options.addOption(OptionBuilder.hasArg().withArgName("portnumber").withLongOpt("port").withType(Number.class).withDescription("Port of the balancer").create('p'));
         options.addOption(OptionBuilder.withDescription("Starts the CalculatorService without Balancer").create("withoutbalancer"));
-        options.addOption(OptionBuilder.hasArg().withArgName("behaviour").withDescription("The algorithm used to calculate Pi. Valid options: gausslegendre, ramanujanformula").withLongOpt("behaviour").create('b'));
+        options.addOption(OptionBuilder.hasArg().withArgName("behaviour").withDescription("The algorithm used to calculate Pi. Valid options: gausslegendre, ramanujanformula " +
+                "(This argument is only used when using CalculatorService without Balancer) ").withLongOpt("behaviour").create('b'));
         HelpFormatter hf = new HelpFormatter();
         CommandLineParser parser = new BasicParser();
-        CommandLine cmd;
+        CommandLine cmd = null;
 
         try {
             cmd = parser.parse(options, args);
 
-            if (cmd.hasOption('h')) {
+            if (cmd.hasOption("help")) {
                 hf.printHelp("java -jar Balancer.jar", options, true);
                 return false;
             }
-
 
             if (cmd.hasOption("withoutbalancer")) {
                 this.mode = MODE_STANDALONE;
@@ -78,14 +82,17 @@ public class CalculatorCLIParser {
                     calcBehav = new GaussLegendre();
                 }
             } else {
-                // TODO get url and port from cli
                 this.mode = MODE_BEHINDBALANCER;
-                this.host = null;
-                this.port = -1;
-            }
+                if (cmd.hasOption('h')) {
+                    this.host = cmd.getOptionValue('h');
+                }
 
+                if (cmd.hasOption('p')) {
+                    this.port = ((Number) cmd.getParsedOptionValue("p")).intValue();
+                }
+            }
         } catch (IllegalBehaviourException ibe) {
-            System.out.println("Invalid Behaviour");
+            System.out.println("Invalid Behaviour " + (cmd != null ? cmd.getOptionValue('b') : null));
             return false;
         } catch (ParseException e) {
             System.out.println(e.getMessage());

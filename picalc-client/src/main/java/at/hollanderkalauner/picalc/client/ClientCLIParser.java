@@ -9,18 +9,17 @@ import org.apache.commons.cli.*;
  * @version 20141213.1
  */
 public class ClientCLIParser {
-    private Client client;
 
+    private int decimalPlaces;
     private String host;
     private int port;
 
     /**
-     * Initializes the parser with the given {@code Client} instance
-     *
-     * @param client instance of {@code Client}
+     * Initializes the parser
      */
-    public ClientCLIParser(Client client) {
-        this.client = client;
+    public ClientCLIParser() {
+        this.host = null;
+        this.port = -1;
     }
 
     /**
@@ -32,7 +31,9 @@ public class ClientCLIParser {
     @SuppressWarnings("AccessStaticViaInstance")
     public boolean checkArgs(String[] args) {
         Options options = new Options();
-        options.addOption(OptionBuilder.withDescription("Shows a help dialog").withLongOpt("help").create('h'));
+        options.addOption(OptionBuilder.withDescription("Shows a help dialog").create("help"));
+        options.addOption(OptionBuilder.hasArg().withArgName("hostname").withLongOpt("host").withDescription("Hostname of the balancer").create('h'));
+        options.addOption(OptionBuilder.hasArg().withArgName("portnumber").withLongOpt("port").withType(Number.class).withDescription("Port of the balancer").create('p'));
         options.addOption(OptionBuilder.hasArg().withArgName("decimalPlaces").isRequired().withType(Number.class).withDescription("The Number of decimal places used to calculate Pi.").withLongOpt("decimalplaces").create('d'));
         HelpFormatter hf = new HelpFormatter();
         CommandLineParser parser = new BasicParser();
@@ -41,15 +42,21 @@ public class ClientCLIParser {
         try {
             cmd = parser.parse(options, args);
 
-            if (cmd.hasOption('h')) {
+            if (cmd.hasOption("help")) {
                 hf.printHelp("java -jar Client.jar", options, true);
                 return false;
             }
 
-            this.host = null;
-            this.port = -1;
+            if (cmd.hasOption('h')) {
+                this.host = cmd.getOptionValue('h');
+            }
 
-            client.setDecimalPlaces(((Number) cmd.getParsedOptionValue("d")).intValue());
+            if (cmd.hasOption('p')) {
+                this.port = ((Number) cmd.getParsedOptionValue("p")).intValue();
+            }
+
+
+            this.decimalPlaces = ((Number) cmd.getParsedOptionValue("d")).intValue();
 
         } catch (ParseException e) {
             System.out.println(e.getMessage());
@@ -59,4 +66,30 @@ public class ClientCLIParser {
         return true;
     }
 
+    /**
+     * Gets the decimal places used to calculate Pi
+     *
+     * @return decimalPlaces
+     */
+    public int getDecimalPlaces() {
+        return decimalPlaces;
+    }
+
+    /**
+     * Gets the hostname of the balancer
+     *
+     * @return hostname
+     */
+    public String getHost() {
+        return host;
+    }
+
+    /**
+     * Gets the port of the balancer
+     *
+     * @return post
+     */
+    public int getPort() {
+        return port;
+    }
 }
