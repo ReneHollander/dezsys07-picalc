@@ -22,7 +22,7 @@ public class CalculatorRegistryService extends UnicastRemoteObject implements Ca
 
     public CalculatorRegistryService() throws RemoteException {
         super();
-        this.calculatorList = Collections.synchronizedList(new ArrayList<Calculator>());
+        this.calculatorList = Collections.synchronizedList(new ArrayList<>());
     }
 
     public List<Calculator> getCalculatorList() {

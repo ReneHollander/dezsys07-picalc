@@ -33,6 +33,7 @@ public class BalancerCLIParser {
     public void start(String[] args) {
         if (checkArgs(args))
             bind();
+        else System.exit(0);
     }
 
     /**
@@ -45,7 +46,7 @@ public class BalancerCLIParser {
     private boolean checkArgs(String[] args) {
         Options options = new Options();
         options.addOption(OptionBuilder.withDescription("Shows a help dialog").withLongOpt("help").create('h'));
-        options.addOption(OptionBuilder.hasArg().withArgName("behaviour").withDescription("The algorithm used to calculate Pi.").withLongOpt("behaviour").create('b'));
+        options.addOption(OptionBuilder.hasArg().withArgName("behaviour").withDescription("The algorithm used to calculate Pi. Valid options: gausslegendre, ramanujanformula").withLongOpt("behaviour").create('b'));
         HelpFormatter hf = new HelpFormatter();
         CommandLineParser parser = new BasicParser();
         CommandLine cmd;

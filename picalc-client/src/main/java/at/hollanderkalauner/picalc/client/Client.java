@@ -21,6 +21,7 @@ import java.rmi.RemoteException;
 public class Client {
     private static final Logger LOG = LogManager.getLogger(Client.class);
     private Calculator service;
+    private int decimalPlaces;
 
     /**
      * Initializes the Client
@@ -36,12 +37,25 @@ public class Client {
     }
 
     /**
-     * Calculates Pi
+     * Sends a request to calculate Pi
      *
      * @return BigDecimal pi
-     * @throws RemoteException if something is wrong
      */
-    public BigDecimal calc() throws RemoteException {
-        return service.pi(40000);
+    public BigDecimal calc() {
+        try {
+            return service.pi(this.decimalPlaces);
+        } catch (RemoteException e) {
+            LOG.error("Error while calculating Pi: " + e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * Sets the decimalPlaces used to calculate Pi.
+     *
+     * @param decimalPlaces decimalPlaces used to calculate Pi
+     */
+    public void setDecimalPlaces(int decimalPlaces) {
+        this.decimalPlaces = decimalPlaces;
     }
 }
