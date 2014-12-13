@@ -3,7 +3,10 @@ package at.hollanderkalauner.picalc.client;
 import org.apache.commons.cli.*;
 
 /**
- * Created by Paul on 13.12.14.
+ * Parses the given arguments
+ *
+ * @author Paul Kalauner
+ * @version 20141213.1
  */
 public class ClientCLIParser {
     private Client client;

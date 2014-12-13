@@ -35,24 +35,33 @@ public class CalculatorService extends UnicastRemoteObject implements Calculator
         LOG.info("Initializing CalculatorService");
     }
 
-    public void bind(Mode mode, CalculationBehaviour calculationBehaviour) throws RemoteException, NotBoundException, MalformedURLException, AlreadyBoundException {
+    public void bind(Mode mode, CalculationBehaviour calculationBehaviour) {
         LOG.info("Binding Service " + this.toString() + "!");
         RMIUtil.setupPolicy();
+        try {
+            if (mode == Mode.BEHINDBALANCER) {
+                CalculatorRegistry calculatorRegistry = (CalculatorRegistry) Naming.lookup(Static.BALANCER_CALCULATORREGISTRY_NAME);
+                calculatorRegistry.registerCalculator(this);
+                LOG.info("Service " + this.toString() + " successfully bound and listening for Requests through the balancer!");
+            } else if (mode == Mode.STANDALONE) {
+                RMIUtil.setupRegistry();
+                if (calculationBehaviour == null) {
+                    LOG.error("You need to specify a calculation behaviour to use!");
+                } else {
+                    Naming.bind(Static.CALCULATOR_CALCULATIONBEHAVIOUR_NAME, calculationBehaviour);
+                    Naming.bind(Static.CALCULATOR_SERVICE_NAME, this);
 
-        if (mode == Mode.BEHINDBALANCER) {
-            CalculatorRegistry calculatorRegistry = (CalculatorRegistry) Naming.lookup(Static.BALANCER_CALCULATORREGISTRY_NAME);
-            calculatorRegistry.registerCalculator(this);
-            LOG.info("Service " + this.toString() + " successfully bound and listening for Requests through the balancer!");
-        } else if (mode == Mode.STANDALONE) {
-            RMIUtil.setupRegistry();
-            if (calculationBehaviour == null) {
-                LOG.error("You need to specify a calculation behaviour to use!");
-            } else {
-                Naming.bind(Static.CALCULATOR_CALCULATIONBEHAVIOUR_NAME, calculationBehaviour);
-                Naming.bind(Static.CALCULATOR_SERVICE_NAME, this);
-
-                LOG.info("Service " + this.toString() + " successfully bound and listening for Requests!");
+                    LOG.info("Service " + this.toString() + " successfully bound and listening for Requests!");
+                }
             }
+        } catch (RemoteException e) {
+            LOG.error("RemoteException: " + e.getMessage());
+        } catch (MalformedURLException e) {
+            LOG.error("Check the given URL: " + e.getMessage());
+        } catch (AlreadyBoundException e) {
+            LOG.error("CalculatorService has already been bound: " + e.getMessage());
+        } catch (NotBoundException e) {
+            LOG.error("Balancer has not been bound: " + e.getMessage());
         }
     }
 
