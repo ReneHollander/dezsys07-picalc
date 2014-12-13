@@ -22,7 +22,8 @@ public class Main {
     public static void main(String[] args) {
         Client c = null;
         try {
-            c = new Client();
+            // TODO get hostname and port from cli
+            c = new Client(null, -1);
         } catch (Exception e) {
             LOG.error("Error occurred while initializing Client: " + e);
             System.exit(1);

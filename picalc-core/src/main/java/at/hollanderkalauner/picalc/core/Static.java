@@ -18,5 +18,8 @@ public class Static {
      */
     public static final String CALCULATOR_CALCULATIONBEHAVIOUR_NAME = "CalculationBehaviour";
 
+    /**
+     * Name of the CalculatorRegistry
+     */
     public static final String BALANCER_CALCULATORREGISTRY_NAME = "CalculatorRegistry";
 }

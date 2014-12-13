@@ -20,20 +20,24 @@ import java.rmi.RemoteException;
  */
 public class Client {
     private static final Logger LOG = LogManager.getLogger(Client.class);
+
     private Calculator service;
     private int decimalPlaces;
 
     /**
      * Initializes the Client
      *
-     * @throws RemoteException
-     * @throws NotBoundException
-     * @throws MalformedURLException
+     * @param host Hostname for the Calculator
+     * @param port Port of the calculator
+     * @exception NotBoundException if name is not currently bound
+     * @exception RemoteException if registry could not be contacted
+     * @exception MalformedURLException if the name is not an appropriately
      */
-    public Client() throws RemoteException, NotBoundException, MalformedURLException {
+    public Client(String host, int port) throws RemoteException, NotBoundException, MalformedURLException {
         LOG.info("Initialising Client");
+        String rmiurl = RMIUtil.createRMIUrl(host, port);
         RMIUtil.setupPolicy();
-        service = (Calculator) Naming.lookup(Static.CALCULATOR_SERVICE_NAME);
+        service = (Calculator) Naming.lookup(rmiurl + Static.CALCULATOR_SERVICE_NAME);
     }
 
     /**

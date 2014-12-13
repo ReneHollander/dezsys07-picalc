@@ -37,4 +37,26 @@ public class RMIUtil {
         LocateRegistry.createRegistry(1099);
     }
 
+    /**
+     * Creates a RMI Url from the specified hostname and port
+     *
+     * @param host Hostname of the registry, if null, localhost is used
+     * @param port Port of the registry, if -1, standart port is used
+     * @return built url
+     */
+    public static String createRMIUrl(String host, int port) {
+        StringBuilder rmiurlbuilder = new StringBuilder();
+        rmiurlbuilder.append("rmi://");
+        if (host == null) {
+            rmiurlbuilder.append("localhost");
+        } else {
+            rmiurlbuilder.append(host);
+        }
+        if (port >= 1) {
+            rmiurlbuilder.append(":").append(port);
+        }
+        rmiurlbuilder.append("/");
+        return rmiurlbuilder.toString();
+    }
+
 }

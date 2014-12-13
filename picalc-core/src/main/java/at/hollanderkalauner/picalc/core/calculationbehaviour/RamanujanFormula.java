@@ -6,7 +6,12 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 /**
- * Quelle: http://cronodon.com/Programming/Pi.html
+ * Ramanujan Formula Algorithm to calculate Pi <br>
+ * Source: http://cronodon.com/Programming/Pi.html
+ * Last Viewed: 12.12.2014
+ *
+ * @author cronodon.com
+ * @version not specified
  */
 public class RamanujanFormula implements CalculationBehaviour {
 

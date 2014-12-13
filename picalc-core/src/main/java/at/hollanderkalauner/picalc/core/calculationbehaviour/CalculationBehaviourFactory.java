@@ -13,6 +13,12 @@ import org.apache.logging.log4j.Logger;
 public class CalculationBehaviourFactory {
     private static final Logger LOG = LogManager.getLogger(CalculationBehaviourFactory.class);
 
+    /**
+     * Create a new Pi Calculation Behaviour based on the name
+     *
+     * @param behaviour Behaviour to create
+     * @return Created Behaviour
+     */
     public static CalculationBehaviour createBehaviour(String behaviour) {
         LOG.debug("Creating Behaviour " + behaviour);
         switch (behaviour) {

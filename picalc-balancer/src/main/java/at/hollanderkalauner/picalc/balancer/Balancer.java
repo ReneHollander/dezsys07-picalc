@@ -16,8 +16,14 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
+
 /**
- * Created by rene on 12/6/14.
+ * A Balancer for the Pi Calculator.
+ * Adds a Calculator Service and a CaluclatorRegistry Service to register new Calculators.
+ * The Client doesn't need to know if the Calculator is a Balancer or not.
+ *
+ * @author Rene Hollander
+ * @version 20141213.1
  */
 public class Balancer extends UnicastRemoteObject implements Calculator {
 
@@ -26,6 +32,11 @@ public class Balancer extends UnicastRemoteObject implements Calculator {
     private CalculatorRegistryService calculatorRegistryService;
     private int lastCalculator;
 
+    /**
+     * Constructs a new Balancer
+     *
+     * @throws java.rmi.RemoteException if failed to export object
+     */
     public Balancer() throws RemoteException {
         super();
 
@@ -33,6 +44,13 @@ public class Balancer extends UnicastRemoteObject implements Calculator {
         this.lastCalculator = 0;
     }
 
+    /**
+     * Binds CalculatorService and a CalculatorRegistry to the Registry. If a new Calculator
+     * connects, it gets added to the List and if a Client Requests a calculation we choose
+     * a Calculator based on Round Robin distribution.
+     *
+     * @param initialCalculationBehaviour Initial Behaviour that the Calculators should use to calculate pi
+     */
     public void bind(CalculationBehaviour initialCalculationBehaviour) {
         LOG.info("Binding Balancer");
         RMIUtil.setupPolicy();
@@ -51,9 +69,19 @@ public class Balancer extends UnicastRemoteObject implements Calculator {
         }
     }
 
-    public void setCalculationBehaviour(CalculationBehaviour calculationBehaviour) throws MalformedURLException, RemoteException {
+    /**
+     * Sets the Calculation Behaviour used by the Calculators
+     *
+     * @param calculationBehaviour The new calculation behaviour
+     * @throws RemoteException if registry could not be contacted
+     */
+    public void setCalculationBehaviour(CalculationBehaviour calculationBehaviour) throws RemoteException {
         LOG.info("Setting Calculation Behaviour to " + calculationBehaviour);
-        Naming.rebind(Static.CALCULATOR_CALCULATIONBEHAVIOUR_NAME, new GaussLegendre());
+        try {
+            Naming.rebind(Static.CALCULATOR_CALCULATIONBEHAVIOUR_NAME, new GaussLegendre());
+        } catch (MalformedURLException e) {
+            LOG.error("MalformedURL: " + e.getMessage());
+        }
     }
 
     @Override

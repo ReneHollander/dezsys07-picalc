@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 /**
  * Gauss Legendre Algorithm to calculate Pi <br>
  * Source: http://java.lykkenborg.no/2005/03/computing-pi-using-bigdecimal.html
+ * Last Viewed: 12.12.2014
  *
  * @author Gaute Lykkenborg
  * @version 20050312.1
@@ -35,7 +36,7 @@ public class GaussLegendre implements CalculationBehaviour {
     }
 
     // the Babylonian square root method (Newton's method)
-    public static BigDecimal sqrt(BigDecimal A, final int SCALE) {
+    private static BigDecimal sqrt(BigDecimal A, final int SCALE) {
         BigDecimal x0 = new BigDecimal("0");
         BigDecimal x1 = new BigDecimal(Math.sqrt(A.doubleValue()));
 

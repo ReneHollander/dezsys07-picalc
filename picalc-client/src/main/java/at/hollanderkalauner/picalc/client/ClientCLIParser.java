@@ -11,6 +11,9 @@ import org.apache.commons.cli.*;
 public class ClientCLIParser {
     private Client client;
 
+    private String host;
+    private int port;
+
     /**
      * Initializes the parser with the given {@code Client} instance
      *
@@ -42,6 +45,9 @@ public class ClientCLIParser {
                 hf.printHelp("java -jar Client.jar", options, true);
                 return false;
             }
+
+            this.host = null;
+            this.port = -1;
 
             client.setDecimalPlaces(((Number) cmd.getParsedOptionValue("d")).intValue());
 

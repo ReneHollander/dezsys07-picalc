@@ -13,9 +13,17 @@ import org.apache.commons.cli.*;
  * @version 20141213.1
  */
 public class CalculatorCLIParser {
+
+    private static final int MODE_STANDALONE = -1;
+    private static final int MODE_BEHINDBALANCER = 1;
+
+
     private CalculatorService calculator;
-    private CalculatorService.Mode mode;
     private CalculationBehaviour calcBehav;
+
+    private int mode = 0;
+    private String host;
+    private int port;
 
     /**
      * Initializes the parser with the given {@code CalculatorService} instance
@@ -63,14 +71,17 @@ public class CalculatorCLIParser {
 
 
             if (cmd.hasOption("withoutbalancer")) {
-                mode = CalculatorService.Mode.STANDALONE;
+                this.mode = MODE_STANDALONE;
                 if (cmd.hasOption('b')) {
                     calcBehav = CalculationBehaviourFactory.createBehaviour(cmd.getOptionValue('b'));
                 } else {
                     calcBehav = new GaussLegendre();
                 }
             } else {
-                mode = CalculatorService.Mode.BEHINDBALANCER;
+                // TODO get url and port from cli
+                this.mode = MODE_BEHINDBALANCER;
+                this.host = null;
+                this.port = -1;
             }
 
         } catch (IllegalBehaviourException ibe) {
@@ -88,6 +99,10 @@ public class CalculatorCLIParser {
      * Binds the CalculatorService
      */
     private void bind() {
-        this.calculator.bind(mode, calcBehav);
+        if (this.mode == MODE_STANDALONE) {
+            this.calculator.bindStandalone(calcBehav);
+        } else if (this.mode == MODE_BEHINDBALANCER) {
+            this.calculator.bindToBalancer(this.host, this.port);
+        }
     }
 }

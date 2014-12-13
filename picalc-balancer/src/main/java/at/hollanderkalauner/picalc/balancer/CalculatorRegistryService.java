@@ -12,7 +12,10 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by rene on 12/12/14.
+ * A Registry to register Calculators to where calculations are getting distributed
+ *
+ * @author Rene Hollander
+ * @version 20141213.1
  */
 public class CalculatorRegistryService extends UnicastRemoteObject implements CalculatorRegistry {
 
@@ -20,11 +23,21 @@ public class CalculatorRegistryService extends UnicastRemoteObject implements Ca
 
     private transient List<Calculator> calculatorList;
 
+    /**
+     * Created a new CalculatorRegistryService
+     *
+     * @throws java.rmi.RemoteException if failed to export object
+     */
     public CalculatorRegistryService() throws RemoteException {
         super();
         this.calculatorList = Collections.synchronizedList(new ArrayList<>());
     }
 
+    /**
+     * Gets the List of the currently connected calculators
+     *
+     * @return List of the currently connected calculators
+     */
     public List<Calculator> getCalculatorList() {
         return calculatorList;
     }
