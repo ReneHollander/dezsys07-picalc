@@ -6,7 +6,7 @@ package at.hollanderkalauner.picalc.calculator;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        CalculatorService calculatorService = new CalculatorService(CalculatorService.Mode.BEHINDBALANCER);
+        CalculatorService calculatorService = new CalculatorService();
         calculatorService.bind(CalculatorService.Mode.BEHINDBALANCER);
     }
 

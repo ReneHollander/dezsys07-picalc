@@ -22,7 +22,7 @@ public class CalculatorService extends UnicastRemoteObject implements Calculator
     private static final Logger LOG = LogManager.getLogger(CalculatorService.class);
 
     public enum Mode {
-        STANDALONE, BEHINDBALANCER;
+        STANDALONE, BEHINDBALANCER
     }
 
     /**
@@ -30,7 +30,7 @@ public class CalculatorService extends UnicastRemoteObject implements Calculator
      *
      * @throws RemoteException on failure
      */
-    public CalculatorService(Mode mode) throws RemoteException {
+    public CalculatorService() throws RemoteException {
         super();
         LOG.info("Initializing CalculatorService");
     }

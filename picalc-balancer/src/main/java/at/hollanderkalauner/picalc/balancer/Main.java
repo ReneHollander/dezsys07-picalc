@@ -1,20 +1,29 @@
 package at.hollanderkalauner.picalc.balancer;
 
-import at.hollanderkalauner.picalc.core.Static;
-import at.hollanderkalauner.picalc.core.calculationbehaviour.GaussLegendre;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.net.MalformedURLException;
-import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 
 /**
- * Created by rene on 12/6/14.
+ * Main Class for the Balancer
+ *
+ * @author Paul Kalauner
+ * @version 201411213.1
  */
 public class Main {
+    private static final Logger LOG = LogManager.getLogger(Main.class);
 
-    public static void main(String[] args) throws MalformedURLException, RemoteException, AlreadyBoundException {
-        Balancer b = new Balancer();
-        b.bind(new GaussLegendre());
+    /**
+     * Entry point of the program
+     *
+     * @param args passed CLI arguments
+     */
+    public static void main(String[] args) {
+        try {
+            new BalancerCLIParser(new Balancer()).start(args);
+        } catch (RemoteException e) {
+            LOG.error("Could not start Balancer", e);
+        }
     }
-
 }

@@ -33,15 +33,22 @@ public class Balancer extends UnicastRemoteObject implements Calculator {
         this.lastCalculator = 0;
     }
 
-    public void bind(CalculationBehaviour initialCalculationBehaviour) throws RemoteException, AlreadyBoundException, MalformedURLException {
+    public void bind(CalculationBehaviour initialCalculationBehaviour) {
         LOG.info("Binding Balancer");
         RMIUtil.setupPolicy();
-        RMIUtil.setupRegistry();
-
-        this.setCalculationBehaviour(initialCalculationBehaviour);
-        Naming.bind(Static.BALANCER_CALCULATORREGISTRY_NAME, this.calculatorRegistryService);
-        Naming.bind(Static.CALCULATOR_SERVICE_NAME, this);
-        LOG.info("Successfully bound Balancer");
+        try {
+            RMIUtil.setupRegistry();
+            this.setCalculationBehaviour(initialCalculationBehaviour);
+            Naming.bind(Static.BALANCER_CALCULATORREGISTRY_NAME, this.calculatorRegistryService);
+            Naming.bind(Static.CALCULATOR_SERVICE_NAME, this);
+            LOG.info("Successfully bound Balancer");
+        } catch (MalformedURLException e) {
+            LOG.error("MalformedURL: " + e.getMessage());
+        } catch (RemoteException e) {
+            LOG.error("RemoteException: " + e.getMessage());
+        } catch (AlreadyBoundException e) {
+            LOG.error("Object has already been bound.");
+        }
     }
 
     public void setCalculationBehaviour(CalculationBehaviour calculationBehaviour) throws MalformedURLException, RemoteException {

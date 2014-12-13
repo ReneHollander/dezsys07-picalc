@@ -1,7 +1,7 @@
 package at.hollanderkalauner.picalc.core.calculationbehaviour;
 
 /**
- * Thrown to indicate that an invalid argument has been passed.
+ * Thrown to indicate that an invalid behaviour has been passed.
  *
  * @author Paul Kalauner
  * @version 20141212.1
