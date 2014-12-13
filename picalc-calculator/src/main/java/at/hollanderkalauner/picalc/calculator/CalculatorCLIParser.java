@@ -62,7 +62,7 @@ public class CalculatorCLIParser {
             }
 
 
-            if (cmd.hasOption("without-balancer")) {
+            if (cmd.hasOption("withoutbalancer")) {
                 mode = CalculatorService.Mode.STANDALONE;
                 if (cmd.hasOption('b')) {
                     calcBehav = CalculationBehaviourFactory.createBehaviour(cmd.getOptionValue('b'));
