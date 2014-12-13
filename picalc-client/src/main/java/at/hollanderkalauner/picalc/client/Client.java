@@ -22,16 +22,15 @@ public class Client {
     private static final Logger LOG = LogManager.getLogger(Client.class);
 
     private Calculator service;
-    private int decimalPlaces;
 
     /**
      * Initializes the Client
      *
      * @param host Hostname for the Calculator
      * @param port Port of the calculator
-     * @exception NotBoundException if name is not currently bound
-     * @exception RemoteException if registry could not be contacted
-     * @exception MalformedURLException if the name is not an appropriately
+     * @throws NotBoundException     if name is not currently bound
+     * @throws RemoteException       if registry could not be contacted
+     * @throws MalformedURLException if the name is not an appropriately
      */
     public Client(String host, int port) throws RemoteException, NotBoundException, MalformedURLException {
         LOG.info("Initialising Client");
@@ -43,23 +42,15 @@ public class Client {
     /**
      * Sends a request to calculate Pi
      *
+     * @param decimalPlaces the decimalPlaces used to calculate Pi
      * @return BigDecimal pi
      */
-    public BigDecimal calc() {
+    public BigDecimal calc(int decimalPlaces) {
         try {
-            return service.pi(this.decimalPlaces);
+            return service.pi(decimalPlaces);
         } catch (RemoteException e) {
             LOG.error("Error while calculating Pi: " + e.getMessage());
         }
         return null;
-    }
-
-    /**
-     * Sets the decimalPlaces used to calculate Pi.
-     *
-     * @param decimalPlaces decimalPlaces used to calculate Pi
-     */
-    public void setDecimalPlaces(int decimalPlaces) {
-        this.decimalPlaces = decimalPlaces;
     }
 }

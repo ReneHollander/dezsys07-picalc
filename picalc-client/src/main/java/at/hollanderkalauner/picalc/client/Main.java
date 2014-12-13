@@ -20,19 +20,21 @@ public class Main {
      * @param args passed CLI arguments
      */
     public static void main(String[] args) {
+        ClientCLIParser clp = new ClientCLIParser();
+        if (!clp.checkArgs(args)) {
+            System.exit(0);
+        }
+
         Client c = null;
         try {
-            // TODO get hostname and port from cli
-            c = new Client(null, -1);
+            c = new Client(clp.getHost(), clp.getPort());
         } catch (Exception e) {
             LOG.error("Error occurred while initializing Client: " + e);
             System.exit(1);
         }
-        ClientCLIParser clp = new ClientCLIParser(c);
-        if (clp.checkArgs(args)) {
-            BigDecimal pi = c.calc();
-            if (pi != null)
-                System.out.println(pi);
-        }
+
+        BigDecimal pi = c.calc(clp.getDecimalPlaces());
+        if (pi != null)
+            System.out.println(pi);
     }
 }

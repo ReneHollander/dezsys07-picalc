@@ -45,7 +45,7 @@ public class BalancerCLIParser {
     @SuppressWarnings("AccessStaticViaInstance")
     private boolean checkArgs(String[] args) {
         Options options = new Options();
-        options.addOption(OptionBuilder.withDescription("Shows a help dialog").withLongOpt("help").create('h'));
+        options.addOption(OptionBuilder.withDescription("Shows a help dialog").create("help"));
         options.addOption(OptionBuilder.hasArg().withArgName("behaviour").withDescription("The algorithm used to calculate Pi. Valid options: gausslegendre, ramanujanformula").withLongOpt("behaviour").create('b'));
         HelpFormatter hf = new HelpFormatter();
         CommandLineParser parser = new BasicParser();
@@ -54,7 +54,7 @@ public class BalancerCLIParser {
         try {
             cmd = parser.parse(options, args);
 
-            if (cmd.hasOption('h')) {
+            if (cmd.hasOption("help")) {
                 hf.printHelp("java -jar Balancer.jar", options, true);
                 return false;
             }
