@@ -37,13 +37,14 @@ public class BalancerCLIParser {
     }
 
     /**
-     * Validates the given Arguments
+     * Validates the given Arguments<br>
+     * This method is declared as public for the purpose of testing.
      *
      * @param args arguments to validate
      * @return true if args are valid
      */
     @SuppressWarnings("AccessStaticViaInstance")
-    private boolean checkArgs(String[] args) {
+    public boolean checkArgs(String[] args) {
         Options options = new Options();
         options.addOption(OptionBuilder.withDescription("Shows a help dialog").create("help"));
         options.addOption(OptionBuilder.hasArg().withArgName("behaviour").withDescription("The algorithm used to calculate Pi. Valid options: gausslegendre, ramanujanformula").withLongOpt("behaviour").create('b'));
@@ -81,5 +82,14 @@ public class BalancerCLIParser {
      */
     private void bind() {
         this.balancer.bind(calcBehav);
+    }
+
+    /**
+     * Used for the purpose of testing.
+     *
+     * @return the used CalculationBehaviour
+     */
+    public CalculationBehaviour getCalcBehav() {
+        return calcBehav;
     }
 }
