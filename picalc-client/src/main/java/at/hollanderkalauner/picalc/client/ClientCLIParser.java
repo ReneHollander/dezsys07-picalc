@@ -41,12 +41,6 @@ public class ClientCLIParser {
 
         try {
             cmd = parser.parse(options, args);
-
-            if (cmd.hasOption("help")) {
-                hf.printHelp("java -jar Client.jar", options, true);
-                return false;
-            }
-
             if (cmd.hasOption('h')) {
                 this.host = cmd.getOptionValue('h');
             }

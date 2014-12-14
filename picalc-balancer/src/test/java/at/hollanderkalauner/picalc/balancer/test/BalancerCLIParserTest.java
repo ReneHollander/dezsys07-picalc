@@ -36,7 +36,7 @@ public class BalancerCLIParserTest {
      */
     @Test
     public void testNoArgs() {
-        String[] args = new String[]{""};
+        String[] args = new String[]{};
         assertEquals(true, this.parser.checkArgs(args));
         assertEquals(true, this.parser.getCalcBehav() instanceof GaussLegendre);
     }

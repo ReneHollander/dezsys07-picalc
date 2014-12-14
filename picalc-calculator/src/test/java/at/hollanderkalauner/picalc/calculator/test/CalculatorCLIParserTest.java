@@ -18,18 +18,16 @@ import static org.junit.Assert.assertEquals;
  * @version 20141214.1
  */
 public class CalculatorCLIParserTest {
-    private CalculatorService calculator;
     private CalculatorCLIParser parser;
 
     /**
-     * Initializes {@code CalculatorService} and {@code CalculatorCLIParser} before every test case
+     * Initializes {@code CalculatorCLIParser} before every test case
      *
      * @throws RemoteException should not happen
      */
     @Before
     public void setUp() throws RemoteException {
-        this.calculator = new CalculatorService();
-        this.parser = new CalculatorCLIParser(calculator);
+        this.parser = new CalculatorCLIParser(new CalculatorService());
     }
 
     /**
@@ -38,7 +36,7 @@ public class CalculatorCLIParserTest {
      */
     @Test
     public void testNoArgs() {
-        String[] args = new String[]{""};
+        String[] args = new String[]{};
         assertEquals(true, this.parser.checkArgs(args));
     }
 
