@@ -1,6 +1,7 @@
 package at.hollanderkalauner.picalc.calculator;
 
-import at.hollanderkalauner.picalc.core.*;
+import at.hollanderkalauner.picalc.core.RMIUtil;
+import at.hollanderkalauner.picalc.core.Static;
 import at.hollanderkalauner.picalc.core.remoteobjects.CalculationBehaviour;
 import at.hollanderkalauner.picalc.core.remoteobjects.Calculator;
 import at.hollanderkalauner.picalc.core.remoteobjects.CalculatorRegistry;
