@@ -1,9 +1,9 @@
 package at.hollanderkalauner.picalc.calculator;
 
-import at.hollanderkalauner.picalc.core.remoteobjects.CalculationBehaviour;
 import at.hollanderkalauner.picalc.core.calculationbehaviour.CalculationBehaviourFactory;
 import at.hollanderkalauner.picalc.core.calculationbehaviour.GaussLegendre;
 import at.hollanderkalauner.picalc.core.calculationbehaviour.IllegalBehaviourException;
+import at.hollanderkalauner.picalc.core.remoteobjects.CalculationBehaviour;
 import org.apache.commons.cli.*;
 
 /**
@@ -48,13 +48,14 @@ public class CalculatorCLIParser {
     }
 
     /**
-     * Validates the given Arguments
+     * Validates the given Arguments<br>
+     * This method is declared as public for the purpose of testing.
      *
      * @param args arguments to validate
      * @return true if args are valid
      */
     @SuppressWarnings("AccessStaticViaInstance")
-    private boolean checkArgs(String[] args) {
+    public boolean checkArgs(String[] args) {
         Options options = new Options();
         options.addOption(OptionBuilder.withDescription("Shows a help dialog").create("help"));
         options.addOption(OptionBuilder.hasArg().withArgName("hostname").withLongOpt("host").withDescription("Hostname of the balancer (Default: localhost)").create('h'));
@@ -111,5 +112,32 @@ public class CalculatorCLIParser {
         } else if (this.mode == MODE_BEHINDBALANCER) {
             this.calculator.bindToBalancer(this.host, this.port);
         }
+    }
+
+    /**
+     * Used for the purpose of testing.
+     *
+     * @return host
+     */
+    public String getHost() {
+        return host;
+    }
+
+    /**
+     * Used for the purpose of testing.
+     *
+     * @return port number
+     */
+    public int getPort() {
+        return port;
+    }
+
+    /**
+     * Used for the purpose of testing.
+     *
+     * @return used CalculationBehaviour
+     */
+    public CalculationBehaviour getCalcBehav() {
+        return calcBehav;
     }
 }

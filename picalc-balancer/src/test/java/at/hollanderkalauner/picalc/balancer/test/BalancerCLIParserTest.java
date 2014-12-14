@@ -18,18 +18,16 @@ import static org.junit.Assert.assertEquals;
  * @version 20141214.1
  */
 public class BalancerCLIParserTest {
-    private Balancer balancer;
     private BalancerCLIParser parser;
 
     /**
-     * Initializes {@code Balancer} and {@code BalancerCLIParser} before every test case
+     * Initializes {@code BalancerCLIParser} before every test case
      *
      * @throws RemoteException should not happen
      */
     @Before
     public void setUp() throws RemoteException {
-        this.balancer = new Balancer();
-        this.parser = new BalancerCLIParser(balancer);
+        this.parser = new BalancerCLIParser(new Balancer());
     }
 
     /**
