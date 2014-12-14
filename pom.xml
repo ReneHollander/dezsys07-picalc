@@ -13,6 +13,7 @@
         <module>picalc-balancer</module>
         <module>picalc-calculator</module>
         <module>picalc-client</module>
+        <module>picalc-integrationtest</module>
     </modules>
 
     <dependencies>
