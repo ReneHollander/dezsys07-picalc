@@ -57,9 +57,9 @@ public class CalculatorCLIParser {
     private boolean checkArgs(String[] args) {
         Options options = new Options();
         options.addOption(OptionBuilder.withDescription("Shows a help dialog").create("help"));
-        options.addOption(OptionBuilder.hasArg().withArgName("hostname").withLongOpt("host").withDescription("Hostname of the balancer").create('h'));
-        options.addOption(OptionBuilder.hasArg().withArgName("portnumber").withLongOpt("port").withType(Number.class).withDescription("Port of the balancer").create('p'));
-        options.addOption(OptionBuilder.withDescription("Starts the CalculatorService without Balancer").create("withoutbalancer"));
+        options.addOption(OptionBuilder.hasArg().withArgName("hostname").withLongOpt("host").withDescription("Hostname of the balancer (Default: localhost)").create('h'));
+        options.addOption(OptionBuilder.hasArg().withArgName("portnumber").withLongOpt("port").withType(Number.class).withDescription("Port of the balancer (Default: 1099)").create('p'));
+        options.addOption(OptionBuilder.withDescription("Starts the CalculatorService without Balancer").create("standalone"));
         options.addOption(OptionBuilder.hasArg().withArgName("behaviour").withDescription("The algorithm used to calculate Pi. Valid options: gausslegendre, ramanujanformula " +
                 "(This argument is only used when using CalculatorService without Balancer) ").withLongOpt("behaviour").create('b'));
         HelpFormatter hf = new HelpFormatter();
@@ -74,7 +74,7 @@ public class CalculatorCLIParser {
                 return false;
             }
 
-            if (cmd.hasOption("withoutbalancer")) {
+            if (cmd.hasOption("standalone")) {
                 this.mode = MODE_STANDALONE;
                 if (cmd.hasOption('b')) {
                     calcBehav = CalculationBehaviourFactory.createBehaviour(cmd.getOptionValue('b'));

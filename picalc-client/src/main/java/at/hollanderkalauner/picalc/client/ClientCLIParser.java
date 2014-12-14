@@ -32,8 +32,8 @@ public class ClientCLIParser {
     public boolean checkArgs(String[] args) {
         Options options = new Options();
         options.addOption(OptionBuilder.withDescription("Shows a help dialog").create("help"));
-        options.addOption(OptionBuilder.hasArg().withArgName("hostname").withLongOpt("host").withDescription("Hostname of the balancer").create('h'));
-        options.addOption(OptionBuilder.hasArg().withArgName("portnumber").withLongOpt("port").withType(Number.class).withDescription("Port of the balancer").create('p'));
+        options.addOption(OptionBuilder.hasArg().withArgName("hostname").withLongOpt("host").withDescription("Hostname of the balancer/CalculatorService (Default: localhost)").create('h'));
+        options.addOption(OptionBuilder.hasArg().withArgName("portnumber").withLongOpt("port").withType(Number.class).withDescription("Port of the balancer/CalculatorService (Default: 1099)").create('p'));
         options.addOption(OptionBuilder.hasArg().withArgName("decimalPlaces").isRequired().withType(Number.class).withDescription("The Number of decimal places used to calculate Pi.").withLongOpt("decimalplaces").create('d'));
         HelpFormatter hf = new HelpFormatter();
         CommandLineParser parser = new BasicParser();
