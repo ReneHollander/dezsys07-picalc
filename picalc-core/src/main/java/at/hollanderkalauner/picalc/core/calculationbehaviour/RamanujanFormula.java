@@ -34,13 +34,9 @@ public class RamanujanFormula implements CalculationBehaviour {
         // Calculate sum of terms
         for (int i = 0; i < terms; i++) {
             // Calculate next term
-            try {
-                numerator = new BigDecimal(LargeFactorial(4 * i).multiply(BigInteger.valueOf(1103 + 26390 * i)));
-                divisor = new BigDecimal(LargeFactorial(i).pow(4).multiply(BigInteger.valueOf(396).pow(4 * i)));
-                term[i] = (numerator.divide(divisor, decimalplaces, BigDecimal.ROUND_HALF_UP));
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
+            numerator = new BigDecimal(LargeFactorial(4 * i).multiply(BigInteger.valueOf(1103 + 26390 * i)));
+            divisor = new BigDecimal(LargeFactorial(i).pow(4).multiply(BigInteger.valueOf(396).pow(4 * i)));
+            term[i] = (numerator.divide(divisor, decimalplaces, BigDecimal.ROUND_HALF_UP));
             // Summate terms and store cumulative sum in the array sigma
             if (i == 0) {
                 sigma[i] = term[i];
