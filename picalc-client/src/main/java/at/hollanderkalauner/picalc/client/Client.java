@@ -40,6 +40,17 @@ public class Client {
     }
 
     /**
+     * Initializes the Client with locahost and the default port
+     *
+     * @throws NotBoundException     if name is not currently bound
+     * @throws RemoteException       if registry could not be contacted
+     * @throws MalformedURLException if the name is not an appropriately
+     */
+    public Client() throws RemoteException, NotBoundException, MalformedURLException {
+        this(null, -1);
+    }
+
+    /**
      * Sends a request to calculate Pi
      *
      * @param decimalPlaces the decimalPlaces used to calculate Pi
