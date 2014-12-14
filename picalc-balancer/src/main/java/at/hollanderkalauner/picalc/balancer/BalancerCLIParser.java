@@ -1,6 +1,6 @@
 package at.hollanderkalauner.picalc.balancer;
 
-import at.hollanderkalauner.picalc.core.CalculationBehaviour;
+import at.hollanderkalauner.picalc.core.remoteobjects.CalculationBehaviour;
 import at.hollanderkalauner.picalc.core.calculationbehaviour.CalculationBehaviourFactory;
 import at.hollanderkalauner.picalc.core.calculationbehaviour.GaussLegendre;
 import at.hollanderkalauner.picalc.core.calculationbehaviour.IllegalBehaviourException;

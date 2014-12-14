@@ -1,6 +1,6 @@
 package at.hollanderkalauner.picalc.client;
 
-import at.hollanderkalauner.picalc.core.Calculator;
+import at.hollanderkalauner.picalc.core.remoteobjects.Calculator;
 import at.hollanderkalauner.picalc.core.RMIUtil;
 import at.hollanderkalauner.picalc.core.Static;
 import org.apache.logging.log4j.LogManager;

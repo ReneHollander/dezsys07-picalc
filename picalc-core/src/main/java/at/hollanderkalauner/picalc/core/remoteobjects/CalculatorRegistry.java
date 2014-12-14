@@ -1,4 +1,4 @@
-package at.hollanderkalauner.picalc.core;
+package at.hollanderkalauner.picalc.core.remoteobjects;
 
 import java.io.Serializable;
 import java.rmi.Remote;

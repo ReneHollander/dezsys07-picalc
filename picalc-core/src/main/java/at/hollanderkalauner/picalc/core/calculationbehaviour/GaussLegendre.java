@@ -1,6 +1,6 @@
 package at.hollanderkalauner.picalc.core.calculationbehaviour;
 
-import at.hollanderkalauner.picalc.core.CalculationBehaviour;
+import at.hollanderkalauner.picalc.core.remoteobjects.CalculationBehaviour;
 
 import java.math.BigDecimal;
 

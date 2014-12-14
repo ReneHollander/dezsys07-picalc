@@ -1,6 +1,9 @@
 package at.hollanderkalauner.picalc.calculator;
 
 import at.hollanderkalauner.picalc.core.*;
+import at.hollanderkalauner.picalc.core.remoteobjects.CalculationBehaviour;
+import at.hollanderkalauner.picalc.core.remoteobjects.Calculator;
+import at.hollanderkalauner.picalc.core.remoteobjects.CalculatorRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
