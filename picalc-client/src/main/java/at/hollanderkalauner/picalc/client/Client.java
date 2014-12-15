@@ -2,15 +2,15 @@ package at.hollanderkalauner.picalc.client;
 
 import at.hollanderkalauner.picalc.core.RMIUtil;
 import at.hollanderkalauner.picalc.core.Static;
+import at.hollanderkalauner.picalc.core.interfaces.RMIStartable;
 import at.hollanderkalauner.picalc.core.remoteobjects.Calculator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
-import java.net.MalformedURLException;
-import java.rmi.Naming;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 /**
  * Client
@@ -18,37 +18,10 @@ import java.rmi.RemoteException;
  * @author Paul Kalauner
  * @version 20141212.1
  */
-public class Client {
+public class Client implements RMIStartable.Client {
     private static final Logger LOG = LogManager.getLogger(Client.class);
 
     private Calculator service;
-
-    /**
-     * Initializes the Client
-     *
-     * @param host Hostname for the Calculator
-     * @param port Port of the calculator
-     * @throws NotBoundException     if name is not currently bound
-     * @throws RemoteException       if registry could not be contacted
-     * @throws MalformedURLException if the name is not an appropriately
-     */
-    public Client(String host, int port) throws RemoteException, NotBoundException, MalformedURLException {
-        LOG.info("Initialising Client");
-        String rmiurl = RMIUtil.createRMIUrl(host, port);
-        RMIUtil.setupPolicy();
-        service = (Calculator) Naming.lookup(rmiurl + Static.CALCULATOR_SERVICE_NAME);
-    }
-
-    /**
-     * Initializes the Client with locahost and the default port
-     *
-     * @throws NotBoundException     if name is not currently bound
-     * @throws RemoteException       if registry could not be contacted
-     * @throws MalformedURLException if the name is not an appropriately
-     */
-    public Client() throws RemoteException, NotBoundException, MalformedURLException {
-        this(null, -1);
-    }
 
     /**
      * Sends a request to calculate Pi
@@ -63,5 +36,19 @@ public class Client {
             LOG.error("Error while calculating Pi: " + e.getMessage());
         }
         return null;
+    }
+
+    @Override
+    public void start(String hostname, int port) throws Exception {
+        LOG.info("Starting Client");
+        RMIUtil.setupPolicy();
+        Registry registry = LocateRegistry.getRegistry(hostname, port);
+        service = (Calculator) registry.lookup(Static.CALCULATOR_SERVICE_NAME);
+        LOG.info("Successfully started Client");
+    }
+
+    @Override
+    public void start() throws Exception {
+        this.start("localhost", 1099);
     }
 }
