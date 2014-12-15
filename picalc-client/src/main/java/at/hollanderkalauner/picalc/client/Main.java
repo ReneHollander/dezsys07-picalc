@@ -27,7 +27,8 @@ public class Main {
 
         Client c = null;
         try {
-            c = new Client(clp.getHost(), clp.getPort());
+            c = new Client();
+            c.start(clp.getHost(), clp.getPort());
         } catch (Exception e) {
             LOG.error("Error occurred while initializing Client: " + e);
             System.exit(1);

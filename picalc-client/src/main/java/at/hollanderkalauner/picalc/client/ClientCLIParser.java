@@ -18,8 +18,8 @@ public class ClientCLIParser {
      * Initializes the parser
      */
     public ClientCLIParser() {
-        this.host = null;
-        this.port = -1;
+        this.host = "localhost";
+        this.port = 1099;
     }
 
     /**

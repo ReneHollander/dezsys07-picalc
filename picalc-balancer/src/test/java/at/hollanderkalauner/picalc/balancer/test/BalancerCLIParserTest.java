@@ -1,6 +1,5 @@
 package at.hollanderkalauner.picalc.balancer.test;
 
-import at.hollanderkalauner.picalc.balancer.Balancer;
 import at.hollanderkalauner.picalc.balancer.BalancerCLIParser;
 import at.hollanderkalauner.picalc.core.calculationbehaviour.GaussLegendre;
 import at.hollanderkalauner.picalc.core.calculationbehaviour.RamanujanFormula;
@@ -27,7 +26,7 @@ public class BalancerCLIParserTest {
      */
     @Before
     public void setUp() throws RemoteException {
-        this.parser = new BalancerCLIParser(new Balancer());
+        this.parser = new BalancerCLIParser();
     }
 
     /**

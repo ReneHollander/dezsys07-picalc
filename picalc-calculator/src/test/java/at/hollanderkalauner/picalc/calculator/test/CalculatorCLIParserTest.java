@@ -1,7 +1,6 @@
 package at.hollanderkalauner.picalc.calculator.test;
 
 import at.hollanderkalauner.picalc.calculator.CalculatorCLIParser;
-import at.hollanderkalauner.picalc.calculator.CalculatorService;
 import at.hollanderkalauner.picalc.core.calculationbehaviour.GaussLegendre;
 import at.hollanderkalauner.picalc.core.calculationbehaviour.RamanujanFormula;
 import org.junit.Before;
@@ -27,7 +26,7 @@ public class CalculatorCLIParserTest {
      */
     @Before
     public void setUp() throws RemoteException {
-        this.parser = new CalculatorCLIParser(new CalculatorService());
+        this.parser = new CalculatorCLIParser();
     }
 
     /**

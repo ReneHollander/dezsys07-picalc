@@ -3,8 +3,6 @@ package at.hollanderkalauner.picalc.balancer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.rmi.RemoteException;
-
 /**
  * Main Class for the Balancer
  *
@@ -20,10 +18,18 @@ public class Main {
      * @param args passed CLI arguments
      */
     public static void main(String[] args) {
+
+        BalancerCLIParser bcp = new BalancerCLIParser();
+        if (!bcp.checkArgs(args)) {
+            System.exit(0);
+        }
+
         try {
-            new BalancerCLIParser(new Balancer()).start(args);
-        } catch (RemoteException e) {
-            LOG.error("Could not start Balancer", e);
+            Balancer b = new Balancer(bcp.getCalcBehav());
+            b.start(bcp.getPort());
+        } catch (Exception e) {
+            LOG.error("Error occurred while initializing Balancer: " + e);
+            System.exit(1);
         }
     }
 }

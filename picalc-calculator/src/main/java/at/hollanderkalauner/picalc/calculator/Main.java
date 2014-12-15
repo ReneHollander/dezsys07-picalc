@@ -3,8 +3,6 @@ package at.hollanderkalauner.picalc.calculator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.rmi.RemoteException;
-
 /**
  * Main class of CalculatorService
  *
@@ -20,10 +18,22 @@ public class Main {
      * @param args passed CLI arguments
      */
     public static void main(String[] args) {
+        CalculatorCLIParser ccp = new CalculatorCLIParser();
+        if (!ccp.checkArgs(args)) {
+            System.exit(0);
+        }
+
         try {
-            new CalculatorCLIParser(new CalculatorService()).start(args);
-        } catch (RemoteException e) {
-            LOG.error("Error while initializing CalculatorService: " + e.getMessage());
+            if (ccp.getMode() == CalculatorCLIParser.Mode.STANDALONE) {
+                StandaloneCalculatorService scs = new StandaloneCalculatorService(ccp.getCalcBehav());
+                scs.start(ccp.getPort());
+            } else {
+                BehindBalancerCalculatorService bcs = new BehindBalancerCalculatorService(ccp.getHost(), ccp.getPort());
+                bcs.start(ccp.getPort());
+            }
+        } catch (Exception e) {
+            LOG.error("Error occurred while initializing Balancer: " + e);
+            System.exit(1);
         }
     }
 }

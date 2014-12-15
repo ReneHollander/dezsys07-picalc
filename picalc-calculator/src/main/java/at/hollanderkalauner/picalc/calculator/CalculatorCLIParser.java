@@ -14,37 +14,24 @@ import org.apache.commons.cli.*;
  */
 public class CalculatorCLIParser {
 
-    private static final int MODE_STANDALONE = -1;
-    private static final int MODE_BEHINDBALANCER = 1;
 
+    public static enum Mode {
+        STANDALONE, BEHINDBALANCER
+    }
 
-    private CalculatorService calculator;
     private CalculationBehaviour calcBehav;
 
-    private int mode = 0;
+    private Mode mode;
     private String host;
     private int port;
 
     /**
-     * Initializes the parser with the given {@code CalculatorService} instance
-     *
-     * @param calculator instance of {@code CalculatorService}
+     * Initializes the parser
      */
-    public CalculatorCLIParser(CalculatorService calculator) {
-        this.calculator = calculator;
-        this.host = null;
-        this.port = -1;
-    }
-
-    /**
-     * Checks arguments and binds the calculator if the arguments are valid
-     *
-     * @param args arguments that will be validated
-     */
-    public void start(String[] args) {
-        if (checkArgs(args))
-            bind();
-        else System.exit(0);
+    public CalculatorCLIParser() {
+        this.calcBehav = new GaussLegendre();
+        this.host = "localhost";
+        this.port = 1099;
     }
 
     /**
@@ -76,14 +63,12 @@ public class CalculatorCLIParser {
             }
 
             if (cmd.hasOption("standalone")) {
-                this.mode = MODE_STANDALONE;
+                this.mode = Mode.STANDALONE;
                 if (cmd.hasOption('b')) {
                     calcBehav = CalculationBehaviourFactory.createBehaviour(cmd.getOptionValue('b'));
-                } else {
-                    calcBehav = new GaussLegendre();
                 }
             } else {
-                this.mode = MODE_BEHINDBALANCER;
+                this.mode = Mode.BEHINDBALANCER;
                 if (cmd.hasOption('h')) {
                     this.host = cmd.getOptionValue('h');
                 }
@@ -103,20 +88,8 @@ public class CalculatorCLIParser {
         return true;
     }
 
-    /**
-     * Binds the CalculatorService
-     */
-    private void bind() {
-        if (this.mode == MODE_STANDALONE) {
-            this.calculator.bindStandalone(calcBehav);
-        } else if (this.mode == MODE_BEHINDBALANCER) {
-            this.calculator.bindToBalancer(this.host, this.port);
-        }
-    }
 
     /**
-     * Used for the purpose of testing.
-     *
      * @return host
      */
     public String getHost() {
@@ -124,8 +97,6 @@ public class CalculatorCLIParser {
     }
 
     /**
-     * Used for the purpose of testing.
-     *
      * @return port number
      */
     public int getPort() {
@@ -133,11 +104,16 @@ public class CalculatorCLIParser {
     }
 
     /**
-     * Used for the purpose of testing.
-     *
      * @return used CalculationBehaviour
      */
     public CalculationBehaviour getCalcBehav() {
         return calcBehav;
+    }
+
+    /**
+     * @return mode (either Standalone or BehindBalancer)
+     */
+    public Mode getMode() {
+        return this.mode;
     }
 }
