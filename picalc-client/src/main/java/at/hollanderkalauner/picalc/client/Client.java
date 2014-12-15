@@ -29,13 +29,8 @@ public class Client implements RMIStartable.Client {
      * @param decimalPlaces the decimalPlaces used to calculate Pi
      * @return BigDecimal pi
      */
-    public BigDecimal calc(int decimalPlaces) {
-        try {
-            return service.pi(decimalPlaces);
-        } catch (RemoteException e) {
-            LOG.error("Error while calculating Pi: " + e.getMessage());
-        }
-        return null;
+    public BigDecimal calc(int decimalPlaces) throws RemoteException {
+        return service.pi(decimalPlaces);
     }
 
     @Override

@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
+import java.rmi.RemoteException;
 
 /**
  * Main class of Client
@@ -34,7 +35,12 @@ public class Main {
             System.exit(1);
         }
 
-        BigDecimal pi = c.calc(clp.getDecimalPlaces());
+        BigDecimal pi = null;
+        try {
+            pi = c.calc(clp.getDecimalPlaces());
+        } catch (RemoteException e) {
+            LOG.error("Error calculating pi", e);
+        }
         if (pi != null)
             System.out.println(pi);
     }

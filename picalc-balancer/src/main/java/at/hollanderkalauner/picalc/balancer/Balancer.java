@@ -11,8 +11,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.net.ConnectException;
-import java.net.MalformedURLException;
-import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -40,7 +38,6 @@ public class Balancer extends UnicastRemoteObject implements RMIStartable.Servic
      * Constructs a new Balancer
      *
      * @param initialCalculationBehaviour initial Calculation Behaviour
-     *
      * @throws java.rmi.RemoteException if failed to export object
      */
     public Balancer(CalculationBehaviour initialCalculationBehaviour) throws RemoteException {
@@ -61,8 +58,8 @@ public class Balancer extends UnicastRemoteObject implements RMIStartable.Servic
 
         LOG.info("Exporting Objects and Services to Registry");
         this.setCalculationBehaviour(this.calculationBehaviour);
-        Naming.bind(Static.BALANCER_CALCULATORREGISTRY_NAME, this.calculatorRegistryService);
-        Naming.bind(Static.CALCULATOR_SERVICE_NAME, this);
+        this.getRegistry().bind(Static.BALANCER_CALCULATORREGISTRY_NAME, this.calculatorRegistryService);
+        this.getRegistry().bind(Static.CALCULATOR_SERVICE_NAME, this);
         LOG.info("Successfully exported Objects and Services to the Registry");
     }
 
@@ -79,12 +76,8 @@ public class Balancer extends UnicastRemoteObject implements RMIStartable.Servic
      */
     public void setCalculationBehaviour(CalculationBehaviour calculationBehaviour) throws RemoteException {
         LOG.info("Setting Calculation Behaviour to " + calculationBehaviour);
-        try {
-            this.calculationBehaviour = calculationBehaviour;
-            Naming.rebind(Static.CALCULATOR_CALCULATIONBEHAVIOUR_NAME, this.calculationBehaviour);
-        } catch (MalformedURLException e) {
-            LOG.error("MalformedURL: " + e.getMessage());
-        }
+        this.calculationBehaviour = calculationBehaviour;
+        this.getRegistry().rebind(Static.CALCULATOR_CALCULATIONBEHAVIOUR_NAME, this.calculationBehaviour);
     }
 
     @Override
@@ -141,7 +134,6 @@ public class Balancer extends UnicastRemoteObject implements RMIStartable.Servic
         UnicastRemoteObject.unexportObject(this.calculatorRegistryService, true);
 
         this.getRegistry().unbind(Static.CALCULATOR_CALCULATIONBEHAVIOUR_NAME);
-        UnicastRemoteObject.unexportObject(this.calculationBehaviour, true);
 
         // Close registry
         UnicastRemoteObject.unexportObject(this.getRegistry(), true);
