@@ -15,10 +15,6 @@ import static org.junit.Assert.assertEquals;
  * @version 20141215.1
  */
 public class TestClientAndCalculator {
-
-    private static final double PI = 3.14159265359;
-    private static final int PI_DECIMAL_PLACES = 11;
-
     /**
      * Test client with a calculator
      *

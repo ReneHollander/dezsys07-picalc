@@ -13,7 +13,7 @@ import java.rmi.RemoteException;
 public interface EmptyRemote extends Remote, Serializable {
 
     /**
-     * Just an Method that does nothing
+     * Just a method that does nothing
      *
      * @throws RemoteException if error
      */

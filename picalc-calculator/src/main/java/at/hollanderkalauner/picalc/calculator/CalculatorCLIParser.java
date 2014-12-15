@@ -15,8 +15,20 @@ import org.apache.commons.cli.*;
 public class CalculatorCLIParser {
 
 
+    /**
+     * Represents the start mode of the CalculatorService
+     */
     public static enum Mode {
-        STANDALONE, BEHINDBALANCER
+
+        /**
+         * CalculatorService will be started without Balancer
+         */
+        STANDALONE,
+
+        /**
+         * CalculatorService will be started with a Balancer
+         */
+        BEHINDBALANCER
     }
 
     private CalculationBehaviour calcBehav;

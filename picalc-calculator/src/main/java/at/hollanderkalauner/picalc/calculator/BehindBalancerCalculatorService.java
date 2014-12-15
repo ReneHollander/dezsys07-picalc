@@ -32,7 +32,7 @@ public class BehindBalancerCalculatorService extends CalculatorService {
      * Initializes and new Calculator Service running behind a balancer
      *
      * @param balancerHostname Hostname of the Balancer
-     * @param balancerPort Port of the Balancer
+     * @param balancerPort     Port of the Balancer
      * @throws java.rmi.RemoteException on failure
      */
     public BehindBalancerCalculatorService(String balancerHostname, int balancerPort) throws RemoteException {

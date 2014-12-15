@@ -19,6 +19,11 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestClientBalancerAndCalculator {
 
+    /**
+     * Tests the program with a running Client, Balancer and a CalculatorService
+     *
+     * @throws Exception if error
+     */
     @Test
     public void testClientBalancerAndCalculator() throws Exception {
         Balancer b = new Balancer(new GaussLegendre());
@@ -35,6 +40,12 @@ public class TestClientBalancerAndCalculator {
         b.close();
     }
 
+    /**
+     * Tests the Client and Balancer with no running CalculatorServices<br>
+     * should throw a RemoteException
+     *
+     * @throws Exception if error
+     */
     @Test(expected = RemoteException.class)
     public void testClientBalancerWithoutCalculator() throws Exception {
         Balancer b = new Balancer(new GaussLegendre());

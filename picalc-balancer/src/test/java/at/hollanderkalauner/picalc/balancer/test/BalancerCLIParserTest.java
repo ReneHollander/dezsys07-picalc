@@ -6,8 +6,6 @@ import at.hollanderkalauner.picalc.core.calculationbehaviour.RamanujanFormula;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.rmi.RemoteException;
-
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -21,11 +19,9 @@ public class BalancerCLIParserTest {
 
     /**
      * Initializes {@code BalancerCLIParser} before every test case
-     *
-     * @throws RemoteException should not happen
      */
     @Before
-    public void setUp() throws RemoteException {
+    public void setUp() {
         this.parser = new BalancerCLIParser();
     }
 
