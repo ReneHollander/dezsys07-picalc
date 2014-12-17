@@ -9,3 +9,5 @@ target/
 /error_hotspot.xml
 hs_err_pid*
 
+dist.zip
+final/

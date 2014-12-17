@@ -16,6 +16,11 @@
         <module>picalc-integrationtest</module>
     </modules>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
     <dependencies>
         <!-- Log4J 2 dependencies -->
         <dependency>
@@ -43,6 +48,30 @@
     </dependencies>
 
     <build>
+        <resources>
+            <!-- add additional files (protocol, uml) and sourcecode to final jar -->
+            <resource>
+                <filtering>false</filtering>
+                <directory>src/main/java</directory>
+            </resource>
+            <resource>
+                <filtering>false</filtering>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <filtering>false</filtering>
+                <directory>src/test/java</directory>
+            </resource>
+            <resource>
+                <filtering>false</filtering>
+                <directory>../files/</directory>
+                <includes>
+                    <include>**/*.pdf</include>
+                    <include>**/*.svg</include>
+                    <include>**/*.html</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <!-- Set the compiler targets to 1.8 -->
             <plugin>
@@ -64,6 +93,26 @@
                     <downloadJavadocs>true</downloadJavadocs>
                 </configuration>
             </plugin>
+            <!-- Clean all previos build artifacts -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <verbose>true</verbose>
+                    <filesets>
+                        <fileset>
+                            <!-- clean final folder -->
+                            <directory>${basedir}/final</directory>
+                            <followSymlinks>false</followSymlinks>
+                            <includes>
+                                <include>*</include>
+                                <include>*/</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
             <!-- generate javadoc and get it ready for packaging -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -71,7 +120,7 @@
                 <version>2.9.1</version>
                 <configuration>
                     <reportOutputDirectory>${basedir}/target/classes</reportOutputDirectory>
-                    <destDir>doc</destDir>
+                    <destDir>javadoc</destDir>
                     <show>public</show>
                 </configuration>
                 <executions>
@@ -81,6 +130,56 @@
                         <goals>
                             <goal>javadoc</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.3.2</version>
+                <executions>
+                    <execution>
+                        <id>generate git log</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>git</executable>
+                    <workingDirectory>${basedir}</workingDirectory>
+                    <outputFile>${basedir}/target/classes/repo.log</outputFile>
+                    <arguments>
+                        <argument>log</argument>
+                        <argument>--stat</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
+            <!-- copy packaged jar to the final folder -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.8</version>
+                <executions>
+                    <execution>
+                        <id>copy-packaged-jar</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>${project.artifactId}</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>${project.packaging}</type>
+                                    <destFileName>${project.artifactId}.jar</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                            <outputDirectory>${basedir}/final/</outputDirectory>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
