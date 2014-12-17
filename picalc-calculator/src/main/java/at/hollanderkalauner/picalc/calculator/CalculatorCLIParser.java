@@ -61,7 +61,7 @@ public class CalculatorCLIParser {
         options.addOption(OptionBuilder.hasArg().withArgName("portnumber").withLongOpt("port").withType(Number.class).withDescription("Port of the balancer (Default: 1099)").create('p'));
         options.addOption(OptionBuilder.withDescription("Starts the CalculatorService without Balancer").create("standalone"));
         options.addOption(OptionBuilder.hasArg().withArgName("behaviour").withDescription("The algorithm used to calculate Pi. Valid options: gausslegendre, ramanujanformula " +
-                "(This argument is only used when using CalculatorService without Balancer) ").withLongOpt("behaviour").create('b'));
+                "(This argument is only used when using CalculatorService without Balancer) (Default: GaussLegendre)").withLongOpt("behaviour").create('b'));
         HelpFormatter hf = new HelpFormatter();
         CommandLineParser parser = new BasicParser();
         CommandLine cmd = null;
@@ -70,7 +70,7 @@ public class CalculatorCLIParser {
             cmd = parser.parse(options, args);
 
             if (cmd.hasOption("help")) {
-                hf.printHelp("java -jar Balancer.jar", options, true);
+                hf.printHelp("java -jar Calculator.jar", options, true);
                 return false;
             }
 

@@ -35,8 +35,8 @@ public class BalancerCLIParser {
     public boolean checkArgs(String[] args) {
         Options options = new Options();
         options.addOption(OptionBuilder.withDescription("Shows a help dialog").create("help"));
-        options.addOption(OptionBuilder.hasArg().withArgName("portnumber").withLongOpt("port").withType(Number.class).withDescription("Port of bind on (Default: 1099)").create('p'));
-        options.addOption(OptionBuilder.hasArg().withArgName("behaviour").withDescription("The algorithm used to calculate Pi. Valid options: gausslegendre, ramanujanformula").withLongOpt("behaviour").create('b'));
+        options.addOption(OptionBuilder.hasArg().withArgName("portnumber").withLongOpt("port").withType(Number.class).withDescription("Port to bind on (Default: 1099)").create('p'));
+        options.addOption(OptionBuilder.hasArg().withArgName("behaviour").withDescription("The algorithm used to calculate Pi. Valid options: gausslegendre, ramanujanformula (Default: GaussLegendre)").withLongOpt("behaviour").create('b'));
         HelpFormatter hf = new HelpFormatter();
         CommandLineParser parser = new BasicParser();
         CommandLine cmd;
