@@ -2,7 +2,7 @@
 
 NAME=picalc_hollander_kalauner
 
-rm -Rf $NAME
+rm -Rf $NAME $NAME.zip
 mkdir -p $NAME
 
 JARS=(picalc-balancer picalc-calculator picalc-client picalc-integrationtest)
