@@ -1,5 +1,6 @@
 package at.hollanderkalauner.picalc.balancer;
 
+import at.hollanderkalauner.picalc.core.RMIUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,6 +19,7 @@ public class Main {
      * @param args passed CLI arguments
      */
     public static void main(String[] args) {
+        RMIUtil.setHostname();
 
         BalancerCLIParser bcp = new BalancerCLIParser();
         if (!bcp.checkArgs(args)) {

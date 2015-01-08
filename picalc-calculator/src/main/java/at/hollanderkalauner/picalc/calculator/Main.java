@@ -1,7 +1,14 @@
 package at.hollanderkalauner.picalc.calculator;
 
+import at.hollanderkalauner.picalc.core.RMIUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.StandardProtocolFamily;
+import java.net.UnknownHostException;
+import java.util.InputMismatchException;
 
 /**
  * Main class of CalculatorService
@@ -17,7 +24,9 @@ public class Main {
      *
      * @param args passed CLI arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnknownHostException {
+        RMIUtil.setHostname();
+
         CalculatorCLIParser ccp = new CalculatorCLIParser();
         if (!ccp.checkArgs(args)) {
             System.exit(0);

@@ -3,6 +3,7 @@ package at.hollanderkalauner.picalc.integrationtest;
 import at.hollanderkalauner.picalc.balancer.Balancer;
 import at.hollanderkalauner.picalc.calculator.BehindBalancerCalculatorService;
 import at.hollanderkalauner.picalc.client.Client;
+import at.hollanderkalauner.picalc.core.RMIUtil;
 import at.hollanderkalauner.picalc.core.calculationbehaviour.GaussLegendre;
 import at.hollanderkalauner.picalc.core.testhelper.StaticTestValues;
 import org.junit.Test;
@@ -18,6 +19,10 @@ import static org.junit.Assert.assertEquals;
  * @version 20141215.1
  */
 public class TestClientBalancerAndCalculator {
+
+    static {
+        RMIUtil.setHostname();
+    }
 
     /**
      * Tests the program with a running Client, Balancer and a CalculatorService
