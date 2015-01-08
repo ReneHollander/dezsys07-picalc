@@ -9,5 +9,8 @@ target/
 /error_hotspot.xml
 hs_err_pid*
 
-dist.zip
+picalc_hollander_kalauner.zip
+picalc_hollander_kalauner/
 final/
+
+dependency-reduced-pom.xml
